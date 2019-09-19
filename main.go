@@ -3,7 +3,6 @@ package main
 import (
 	"errors"
 	"gin_server/config"
-	"gin_server/model"
 	"gin_server/router"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/pflag"
@@ -26,8 +25,8 @@ func main() {
 	}
 	gin.SetMode(viper.GetString("runmode"))
 
-	model.DB.Init()
-	defer model.DB.Close()
+	//model.DB.Init()
+	//defer model.DB.Close()
 
 	g := gin.New()
 

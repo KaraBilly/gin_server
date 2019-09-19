@@ -1,11 +1,19 @@
 runmode: debug                 # 开发模式, debug, release, test
-port: :8001                  # HTTP绑定端口
+port: :5022                  # HTTP绑定端口
 name: ginserver              # API Server的名字
-url: http://127.0.0.1:8001   # pingServer函数请求的API服务器的ip:port
+url: http://127.0.0.1:5022   # pingServer函数请求的API服务器的ip:port
 max_ping_count: 10           # pingServer函数try的次数
 
 db:
-  name: order
-  addr: 127.0.0.1:3306
-  username: root
-  password: Marykay1
+  name: cn_ecshop_uat
+  addr: 172.30.25.58:3306
+  username: usr.ecshop.admin
+  password: Lv$wUPc9#bxA8Y2q
+
+wechat:
+  base_url : https://api.weixin.qq.com
+  get_token : /cgi-bin/token
+  send_message : /cgi-bin/message/wxopen/template/send
+  grant_type : client_credential
+  appid : wxf14d614f769678bd
+  secret : 483f356e0b794a67e4ce92ddfda78388

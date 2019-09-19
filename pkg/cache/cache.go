@@ -9,9 +9,12 @@ var (
 	c = cache.New(1*time.Minute, 1*time.Minute)
 )
 
-func GetTokenCache(key string) (string, bool) {
-	token, exist := c.Get(AccessToken)
-	return token.(string), exist
+//func init(){
+//	c = cache.New(1*time.Minute, 1*time.Minute)
+//}
+
+func GetTokenCache(key string) (interface{}, bool) {
+	return c.Get(AccessToken)
 }
 func SetTokenCache(key string, value string, expire time.Duration) {
 	c.Set(key, value, expire)

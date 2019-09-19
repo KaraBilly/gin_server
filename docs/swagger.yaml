@@ -11,6 +11,11 @@ definitions:
       username:
         type: string
     type: object
+  wechat.GetTokenResponse:
+    properties:
+      token:
+        type: string
+    type: object
 info:
   contact: {}
   license: {}
@@ -32,10 +37,25 @@ paths:
       - application/json
       responses:
         "200":
-          description: '{"code":0,"message":"OK","data":{"username":"kong"}}'
+          description: '{"username":"xx"}'
           schema:
             $ref: '#/definitions/user.CreateResponse'
       summary: Add new user to the database
+      tags:
+      - user
+  /v1/wechat/token:
+    get:
+      consumes:
+      - application/json
+      description: Get access token from middle-platform
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"token":"xx"}'
+          schema:
+            $ref: '#/definitions/wechat.GetTokenResponse'
+      summary: Get wechat access token
       tags:
       - user
 swagger: "2.0"
