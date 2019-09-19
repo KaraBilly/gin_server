@@ -1,13 +1,20 @@
-FROM golang:latest AS builder
-ADD . $GOPATH/gin_server
-WORKDIR $GOPATH/gin_server
-RUN go mod download
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -o /main .
+FROM golang:1.12-alpine3.10  AS Builder
 
-# final stage
-FROM alpine:latest
-RUN apk --no-cache add ca-certificates
-COPY --from=builder /main ./
-RUN chmod +x ./main
-ENTRYPOINT ["./main"]
-EXPOSE 3030
+ENV GOPROXY="https://goproxy.io"
+ENV CGO_ENABLED=0
+
+RUN echo "https://mirrors.aliyun.com/alpine/v3.10/main/" > /etc/apk/repositories
+RUN echo "https://mirrors.aliyun.com/alpine/v3.10/community/" >> /etc/apk/repositories
+RUN apk add tzdata
+COPY . /app
+WORKDIR /app
+RUN go build .
+
+FROM alpine:3.10
+
+WORKDIR /app
+COPY --from=Builder /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+COPY --from=Builder /app/gin_server /app/bin/gin_server
+COPY --from=Builder /app/conf /app/conf
+EXPOSE 5022
+ENTRYPOINT ["/app/bin/gin_server"]
